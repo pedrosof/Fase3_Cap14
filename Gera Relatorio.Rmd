@@ -1,0 +1,98 @@
+
+---
+title: "Análise Exploratória de Dados Agrícolas"
+author: "Fábio Marcos Pedroso Filho"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+```
+
+## Carregar Dados e Resumo
+
+```{r load-data}
+# Carregar o conjunto de dados
+df <- read.csv("/Users/pedrosof/Documents/FIAP/Trabalhos/Fase3_Cap14/Atividade_Cap_14_produtos_agricolas.csv")
+summary(df)
+```
+
+## Distribuição de Nitrogênio
+
+```{r nitrogen-plot}
+ggplot(df, aes(x = N)) +
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black") +
+  geom_density(color = "red") +
+  ggtitle("Distribuição de Nitrogênio (N)")
+```
+
+## Distribuição de Fósforo
+
+```{r phosphorus-plot}
+ggplot(df, aes(x = P)) +
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black") +
+  geom_density(color = "red") +
+  ggtitle("Distribuição de Fósforo (P)")
+```
+
+## Boxplot de Nitrogênio
+
+```{r nitrogen-boxplot}
+ggplot(df, aes(y = N)) +
+  geom_boxplot(fill = "lightblue") +
+  ggtitle("Boxplot de Nitrogênio (N)")
+```
+
+## Boxplot de Fósforo
+
+```{r phosphorus-boxplot}
+ggplot(df, aes(y = P)) +
+  geom_boxplot(fill = "lightblue") +
+  ggtitle("Boxplot de Fósforo (P)")
+```
+
+## Boxplot de Potássio
+
+```{r potassium-boxplot}
+ggplot(df, aes(y = K)) +
+  geom_boxplot(fill = "lightblue") +
+  ggtitle("Boxplot de Potássio (K)")
+```
+
+## Boxplot de Temperatura
+
+```{r temperature-boxplot}
+ggplot(df, aes(y = temperature)) +
+  geom_boxplot(fill = "lightblue") +
+  ggtitle("Boxplot de Temperatura")
+```
+
+## Boxplot de Umidade
+
+```{r humidity-boxplot}
+ggplot(df, aes(y = humidity)) +
+  geom_boxplot(fill = "lightblue") +
+  ggtitle("Boxplot de Umidade")
+```
+
+## Matriz de Correlação
+
+```{r correlation-matrix}
+# Filtrar apenas as colunas numéricas
+df_numeric <- df %>%
+  select(N, P, K, temperature, humidity, rainfall)
+
+# Criar a matriz de correlação
+cor_matrix <- cor(df_numeric)
+
+# Plotar a matriz de correlação
+corrplot(cor_matrix, method = "color", addCoef.col = "black", tl.col = "black", tl.cex = 0.8)
+```
+
+## Conclusão
+
+Nesta análise, exploramos a distribuição das principais variáveis relacionadas às condições de solo e clima para diferentes culturas agrícolas. A análise da matriz de correlação nos ajudou a entender como essas variáveis se relacionam entre si. Esses insights podem servir como base para futuras análises preditivas.

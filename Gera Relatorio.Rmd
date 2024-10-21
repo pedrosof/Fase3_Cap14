@@ -1,6 +1,6 @@
 
 ---
-title: "Análise Exploratória de Dados Agrícolas"
+title: "Análise Exploratória e Descritiva de Dados Agrícolas por Cultura"
 author: "Fábio Marcos Pedroso Filho"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -21,67 +21,93 @@ df <- read.csv("/Users/pedrosof/Documents/FIAP/Trabalhos/Fase3_Cap14/Atividade_C
 summary(df)
 ```
 
-## Distribuição de Nitrogênio
+---
 
-```{r nitrogen-plot}
+## **Análise Descritiva dos Dados Agrícolas por Cultura**
+
+### **Distribuição de Nitrogênio por Cultura**
+```{r nitrogen-plot-by-culture, fig.pos='H'}
 ggplot(df, aes(x = N)) +
-  geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black") +
+  geom_histogram(aes(y = after_stat(density)), bins = 30, fill = "skyblue", color = "black") +
   geom_density(color = "red") +
-  ggtitle("Distribuição de Nitrogênio (N)")
+  facet_wrap(~label) + 
+  ggtitle("Distribuição de Nitrogênio (N) por Cultura") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Distribuição de Fósforo
+O nitrogênio (N) é um dos principais nutrientes necessários para o crescimento das plantas. A análise da distribuição de Nitrogênio por cultura revela que diferentes culturas demandam níveis variados de nitrogênio. Culturas como o arroz tendem a ser plantadas em solos com níveis mais elevados de nitrogênio, enquanto outras culturas, como o milho, podem se desenvolver em solos com níveis mais moderados de N.
 
-```{r phosphorus-plot}
+
+\newpage
+
+### **Distribuição de Fósforo por Cultura**
+```{r phosphorus-plot-by-culture, fig.pos='H'}
 ggplot(df, aes(x = P)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 30, fill = "skyblue", color = "black") +
+  geom_density(color = "red") +
+  facet_wrap(~label) + 
+  ggtitle("Distribuição de Fósforo (P) por Cultura") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+O fósforo (P) também desempenha um papel fundamental no desenvolvimento das plantas, especialmente nas fases iniciais de crescimento. Observamos uma maior concentração de fósforo em culturas como trigo e cana-de-açúcar, enquanto outras culturas, como o algodão, apresentam solos com menor concentração de fósforo.
+
+
+\newpage
+
+### **Distribuição de Potássio por Cultura**
+```{r potassium-plot-by-culture, fig.pos='H'}
+ggplot(df, aes(x = K)) +
   geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black") +
   geom_density(color = "red") +
-  ggtitle("Distribuição de Fósforo (P)")
+  facet_wrap(~label) + 
+  ggtitle("Distribuição de Potássio (K) por Cultura") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Boxplot de Nitrogênio
+O potássio (K) é outro macronutriente essencial para o crescimento das plantas, desempenhando um papel importante na regulação da água e no fortalecimento das plantas. A distribuição de potássio entre as diferentes culturas mostra uma variação significativa, com culturas como o milho e o arroz exibindo solos com níveis mais elevados de potássio, enquanto outras culturas apresentam uma menor concentração.
 
-```{r nitrogen-boxplot}
-ggplot(df, aes(y = N)) +
+\newpage
+
+### **Boxplot de Nitrogênio por Cultura**
+```{r nitrogen-boxplot-by-culture, fig.pos='H'}
+ggplot(df, aes(y = N, x = label)) +
   geom_boxplot(fill = "lightblue") +
-  ggtitle("Boxplot de Nitrogênio (N)")
+  ggtitle("Boxplot de Nitrogênio (N) por Cultura") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Boxplot de Fósforo
+A visualização dos boxplots por cultura mostra a variabilidade dos níveis de Nitrogênio entre diferentes culturas. Algumas culturas têm maior variação nos níveis de N, sugerindo que elas podem se adaptar a uma gama maior de condições de solo. A cultura do arroz, por exemplo, apresenta uma alta concentração de nitrogênio, sugerindo que depende mais de solos ricos nesse nutriente.
 
-```{r phosphorus-boxplot}
-ggplot(df, aes(y = P)) +
+
+\newpage
+
+### **Boxplot de Fósforo por Cultura**
+```{r phosphorus-boxplot-by-culture, fig.pos='H'}
+ggplot(df, aes(y = P, x = label)) +
   geom_boxplot(fill = "lightblue") +
-  ggtitle("Boxplot de Fósforo (P)")
+  ggtitle("Boxplot de Fósforo (P) por Cultura") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Boxplot de Potássio
+O boxplot de Fósforo revela que a maioria das culturas está sendo plantada em solos com concentrações moderadas a altas de fósforo, especialmente cana-de-açúcar e trigo. No entanto, observamos algumas culturas mais tolerantes a níveis mais baixos desse nutriente, como o algodão.
 
-```{r potassium-boxplot}
-ggplot(df, aes(y = K)) +
+\newpage
+
+### **Boxplot de Potássio por Cultura**
+```{r potassium-boxplot-by-culture, fig.pos='H'}
+ggplot(df, aes(y = K, x = label)) +
   geom_boxplot(fill = "lightblue") +
-  ggtitle("Boxplot de Potássio (K)")
+  ggtitle("Boxplot de Potássio (K) por Cultura") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Boxplot de Temperatura
+O boxplot de Potássio revela uma variabilidade interessante nos níveis de potássio entre diferentes culturas. Certas culturas, como o milho e a cana-de-açúcar, parecem depender de níveis mais altos de potássio, enquanto outras culturas são mais tolerantes a solos com níveis mais baixos de K.
 
-```{r temperature-boxplot}
-ggplot(df, aes(y = temperature)) +
-  geom_boxplot(fill = "lightblue") +
-  ggtitle("Boxplot de Temperatura")
-```
+\newpage
 
-## Boxplot de Umidade
-
-```{r humidity-boxplot}
-ggplot(df, aes(y = humidity)) +
-  geom_boxplot(fill = "lightblue") +
-  ggtitle("Boxplot de Umidade")
-```
-
-## Matriz de Correlação
-
-```{r correlation-matrix}
+### **Matriz de Correlação**
+```{r correlation-matrix-culture, fig.pos='H'}
 # Filtrar apenas as colunas numéricas
 df_numeric <- df %>%
   select(N, P, K, temperature, humidity, rainfall)
@@ -93,6 +119,11 @@ cor_matrix <- cor(df_numeric)
 corrplot(cor_matrix, method = "color", addCoef.col = "black", tl.col = "black", tl.cex = 0.8)
 ```
 
-## Conclusão
+A matriz de correlação entre as principais variáveis do solo e clima revela algumas correlações interessantes. Há uma correlação positiva entre a umidade e a precipitação, o que é esperado, pois um maior volume de chuvas aumenta a umidade do solo. No entanto, a correlação entre nitrogênio e outras variáveis do solo (como fósforo e potássio) é baixa, indicando que o nitrogênio se comporta de maneira relativamente independente dessas outras variáveis.
 
-Nesta análise, exploramos a distribuição das principais variáveis relacionadas às condições de solo e clima para diferentes culturas agrícolas. A análise da matriz de correlação nos ajudou a entender como essas variáveis se relacionam entre si. Esses insights podem servir como base para futuras análises preditivas.
+
+\newpage
+
+## **Conclusão**
+
+Essa análise nos forneceu insights sobre a distribuição dos principais nutrientes do solo (Nitrogênio, Fósforo e Potássio) por cultura, além de mostrar como as variáveis climáticas (como temperatura e umidade) influenciam as condições de plantio. Com esses gráficos e a análise descritiva, podemos ver como diferentes culturas se adaptam a níveis variados de nutrientes e condições climáticas, o que ajuda a identificar padrões que podem ser úteis para otimizar o cultivo de cada tipo de planta.

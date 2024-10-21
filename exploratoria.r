@@ -4,7 +4,7 @@ library(dplyr)
 library(corrplot)
 
 # Carregar o conjunto de dados (substitua o caminho do arquivo)
-df <- read.csv("caminho_do_arquivo.csv")
+df <- read.csv("/Users/pedrosof/Documents/FIAP/Trabalhos/Fase3_Cap14/Atividade_Cap_14_produtos_agricolas.csv")
 
 # 1. Análise Exploratória de Dados (EDA)
 # Visualizar as estatísticas básicas do conjunto de dados
